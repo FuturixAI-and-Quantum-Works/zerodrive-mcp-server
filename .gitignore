@@ -1,0 +1,70 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Test & coverage
+coverage/
+.vitest/
+.nyc_output/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# IDE & editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+
+# Package manager
+.npm/
+.pnpm-store/
+.yarn/
+
+# Cache
+.cache/
+.eslintcache
+.prettiercache
+*.tscache
+
+# Misc
+*.local
+.turbo/
+.vercel/
+.output/
+
+# Optional: Uncomment if you want to ignore lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
