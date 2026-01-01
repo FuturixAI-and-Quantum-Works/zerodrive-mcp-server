@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "title": "Restore from Trash",
+    "description": "Restore a file or folder from the trash back to its original location. If the original parent folder no longer exists, the item is restored to the root directory.",
+    "category": "Trash Management",
+    "categorySlug": "trash"
+  },
+  "endpoint": {
+    "method": "POST",
+    "path": "/api/v1/trash/{itemId}/restore",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:write", "folders:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "itemId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the file or folder to restore",
+        "example": "file_abc123"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "required": false,
+            "description": "Type of item to restore. If not provided, the system will auto-detect.",
+            "enum": ["file", "folder"],
+            "example": "file"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Item restored successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "parentId": { "type": "string", "nullable": true },
+                "isTrashed": { "type": "boolean" },
+                "updatedAt": { "type": "string", "format": "date-time" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Item not found or not in trash"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to restore item"
+      }
+    ]
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "title": "Create Folder",
+    "description": "Create a new folder. Can be created at root level or as a subfolder of an existing folder.",
+    "category": "Folder Management",
+    "categorySlug": "folders"
+  },
+  "endpoint": {
+    "method": "POST",
+    "path": "/api/v1/folders",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["folders:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "description": "Name of the folder",
+            "minLength": 1,
+            "maxLength": 255,
+            "example": "New Folder"
+          },
+          "parentId": {
+            "type": "string",
+            "required": false,
+            "description": "Parent folder ID. Omit to create at root level.",
+            "nullable": true,
+            "example": "clx0987654321"
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "description": "Optional description for the folder",
+            "example": "Folder for project files"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 201,
+        "statusText": "Created",
+        "description": "Folder created successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "description": { "type": "string", "nullable": true },
+                "parentId": { "type": "string", "nullable": true },
+                "isStarred": { "type": "boolean" },
+                "isTrashed": { "type": "boolean" },
+                "createdAt": { "type": "string", "format": "date-time" },
+                "updatedAt": { "type": "string", "format": "date-time" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "Folder name is required"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to create folder"
+      }
+    ]
+  }
+}

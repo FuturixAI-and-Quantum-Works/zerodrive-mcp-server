@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "title": "Move File",
+    "description": "Move a file to a different folder. Set folderId to null to move the file to the root directory.",
+    "category": "File Management",
+    "categorySlug": "files"
+  },
+  "endpoint": {
+    "method": "PUT",
+    "path": "/api/v1/files/{fileId}/move",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "fileId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the file to move",
+        "example": "clx1234567890"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "folderId": {
+            "type": "string",
+            "required": true,
+            "description": "The destination folder ID. Use null to move to root.",
+            "nullable": true,
+            "example": "clx0987654321"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "File moved successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "File or destination folder not found"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to move file"
+      }
+    ]
+  }
+}

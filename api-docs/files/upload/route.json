@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "Upload File",
+    "description": "Upload one or more files directly. Supports multipart form data with optional folder path for automatic folder creation.",
+    "category": "File Management",
+    "categorySlug": "files"
+  },
+  "endpoint": {
+    "method": "POST",
+    "path": "/api/v1/files/upload",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "Must be multipart/form-data",
+        "example": "multipart/form-data"
+      }
+    ],
+    "body": {
+      "contentType": "multipart/form-data",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "file",
+            "required": true,
+            "description": "File(s) to upload. Use file0, file1, etc. for multiple files."
+          },
+          "folderPath": {
+            "type": "string",
+            "required": false,
+            "description": "Folder path where file should be placed. Folders are created automatically if they don't exist.",
+            "example": "Documents/Reports"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Files uploaded successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "message": { "type": "string" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "folderPath": { "type": "string", "nullable": true },
+                "folderId": { "type": "string", "nullable": true },
+                "uploadedFiles": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "name": { "type": "string" },
+                      "size": { "type": "integer" },
+                      "mimeType": { "type": "string" },
+                      "storageKey": { "type": "string" }
+                    }
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "fileName": { "type": "string" },
+                      "error": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "No files provided or invalid request"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 413,
+        "statusText": "Payload Too Large",
+        "description": "Storage limit exceeded"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Server error occurred during upload"
+      }
+    ]
+  }
+}

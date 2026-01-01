@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "DELETE",
+    "url": "/api/v1/folders/{folderId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true
+  }
+}

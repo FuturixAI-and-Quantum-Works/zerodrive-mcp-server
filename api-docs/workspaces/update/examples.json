@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "PATCH",
+    "url": "/api/v1/workspaces/{workspaceId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Updated Workspace Name",
+      "color": "#10B981"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "workspace": {
+        "id": "clx1234567890",
+        "name": "Updated Workspace Name",
+        "description": "Shared workspace for team projects",
+        "icon": "briefcase",
+        "color": "#10B981",
+        "storageAllocated": "10737418240",
+        "storageUsed": "2147483648",
+        "isArchived": false,
+        "archivedAt": null,
+        "createdAt": "2024-01-15T10:00:00Z",
+        "updatedAt": "2024-01-20T16:00:00Z",
+        "owner": {
+          "id": "user_abc123",
+          "name": "John Doe",
+          "email": "john@example.com",
+          "image": "https://example.com/avatar.jpg"
+        }
+      },
+      "message": "Workspace updated successfully"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "title": "Delete File",
+    "description": "Delete a file. By default, files are moved to trash (soft delete). Use the permanent query parameter to permanently delete a file.",
+    "category": "File Management",
+    "categorySlug": "files"
+  },
+  "endpoint": {
+    "method": "DELETE",
+    "path": "/api/v1/files/{fileId}",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "fileId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the file to delete",
+        "example": "clx1234567890"
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "permanent",
+        "type": "boolean",
+        "required": false,
+        "description": "If true, permanently deletes the file instead of moving to trash",
+        "default": false
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "File deleted successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "success": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "File not found or access denied"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to delete file"
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/files/{fileId}/fetch",
+    "queryParams": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "download": false
+    },
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": "inline; filename=\"document.pdf\"",
+      "Content-Length": "1048576"
+    },
+    "body": "[Binary file content]"
+  }
+}

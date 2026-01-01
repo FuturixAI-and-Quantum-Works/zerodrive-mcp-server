@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "title": "Create Workspace Folder",
+    "description": "Create a new folder in a workspace. Requires EDITOR role or higher.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "POST",
+    "path": "/api/v1/workspaces/{workspaceId}/folders",
+    "baseUrl": "https://zerodrive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "workspaceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the workspace",
+        "example": "workspace_abc123"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "description": "Folder name (max 255 characters)",
+            "example": "Project Documents"
+          },
+          "parentId": {
+            "type": "string",
+            "required": false,
+            "description": "Parent folder ID. Omit or null for root level.",
+            "example": "folder_parent123"
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "description": "Optional folder description",
+            "example": "Documents for Q4 project"
+          },
+          "color": {
+            "type": "string",
+            "required": false,
+            "description": "Folder color (hex code)",
+            "example": "#3B82F6"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 201,
+        "statusText": "Created",
+        "description": "Folder created successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "folder": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "description": { "type": "string", "nullable": true },
+                "color": { "type": "string", "nullable": true },
+                "isStarred": { "type": "boolean" },
+                "isShared": { "type": "boolean" },
+                "isTrashed": { "type": "boolean" },
+                "createdAt": { "type": "string", "format": "date-time" },
+                "updatedAt": { "type": "string", "format": "date-time" },
+                "createdBy": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "email": { "type": "string" },
+                    "image": { "type": "string", "nullable": true }
+                  }
+                },
+                "parent": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "message": { "type": "string" }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "Folder name is required, name too long, or folder with same name already exists"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "You don't have permission to create folders in this workspace"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Workspace not found, access denied, or parent folder not found"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to create folder"
+      }
+    ]
+  }
+}

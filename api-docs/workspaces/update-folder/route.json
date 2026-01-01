@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "title": "Update Workspace Folder",
+    "description": "Update a folder's properties including name, description, color, parent (move), starred status, or trash status. Requires EDITOR role or higher.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "PATCH",
+    "path": "/api/v1/workspaces/{workspaceId}/folders/{folderId}",
+    "baseUrl": "https://zerodrive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "workspaceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the workspace",
+        "example": "workspace_abc123"
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the folder to update",
+        "example": "folder_xyz789"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": false,
+            "description": "New folder name (max 255 characters)",
+            "example": "Renamed Folder"
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "description": "New folder description (null to clear)",
+            "example": "Updated description"
+          },
+          "color": {
+            "type": "string",
+            "required": false,
+            "description": "New folder color (hex code, null to clear)",
+            "example": "#10B981"
+          },
+          "parentId": {
+            "type": "string",
+            "required": false,
+            "description": "Move folder to new parent (null for root level)",
+            "example": "folder_newparent123"
+          },
+          "isStarred": {
+            "type": "boolean",
+            "required": false,
+            "description": "Star or unstar the folder",
+            "example": true
+          },
+          "isTrashed": {
+            "type": "boolean",
+            "required": false,
+            "description": "Move to trash (true) or restore from trash (false)",
+            "example": false
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Folder updated successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "folder": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "description": { "type": "string", "nullable": true },
+                "color": { "type": "string", "nullable": true },
+                "isStarred": { "type": "boolean" },
+                "isShared": { "type": "boolean" },
+                "isTrashed": { "type": "boolean" },
+                "trashedAt": { "type": "string", "format": "date-time", "nullable": true },
+                "createdAt": { "type": "string", "format": "date-time" },
+                "updatedAt": { "type": "string", "format": "date-time" },
+                "createdBy": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "email": { "type": "string" },
+                    "image": { "type": "string", "nullable": true }
+                  }
+                },
+                "parent": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "message": { "type": "string" }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "Invalid input: empty name, name too long, duplicate name, moving folder into itself, or no valid fields to update"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "You don't have permission to modify folders in this workspace"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Workspace not found, access denied, folder not found, or parent folder not found"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to update folder"
+      }
+    ]
+  }
+}

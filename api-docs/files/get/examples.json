@@ -1,0 +1,33 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/files/{fileId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "id": "clx1234567890",
+      "name": "quarterly-report.pdf",
+      "size": 2457600,
+      "mimeType": "application/pdf",
+      "extension": ".pdf",
+      "description": "Q4 2024 Financial Report",
+      "folderId": "clx0987654321",
+      "folder": {
+        "id": "clx0987654321",
+        "name": "Reports"
+      },
+      "isStarred": true,
+      "isTrashed": false,
+      "trashedAt": null,
+      "tags": ["finance", "quarterly", "2024"],
+      "version": 3,
+      "checksum": "sha256:a3f2b1c4d5e6f7890123456789abcdef",
+      "createdAt": "2024-01-15T10:30:00Z",
+      "updatedAt": "2024-01-20T14:22:00Z"
+    }
+  }
+}

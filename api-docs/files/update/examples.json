@@ -1,0 +1,28 @@
+{
+  "request": {
+    "method": "PATCH",
+    "url": "/api/v1/files/{fileId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "updated-report.pdf",
+      "isStarred": true,
+      "tags": ["important", "finance"]
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "id": "clx1234567890",
+      "name": "updated-report.pdf",
+      "description": null,
+      "folderId": "clx0987654321",
+      "isStarred": true,
+      "isTrashed": false,
+      "tags": ["important", "finance"],
+      "updatedAt": "2024-01-20T15:30:00Z"
+    }
+  }
+}

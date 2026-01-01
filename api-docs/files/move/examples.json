@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "PUT",
+    "url": "/api/v1/files/{fileId}/move",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "folderId": "clx0987654321"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "message": "File moved successfully"
+    }
+  }
+}

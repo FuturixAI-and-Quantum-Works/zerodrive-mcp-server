@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "DELETE",
+    "url": "/api/v1/trash",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "message": "Trash cleared successfully",
+      "deletedFiles": 15,
+      "deletedFolders": 3,
+      "storageFreed": 52428800
+    }
+  }
+}

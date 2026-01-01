@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "title": "Upload File to Workspace",
+    "description": "Upload a file directly to a workspace. Supports multipart form data with optional folder targeting. Requires EDITOR or higher workspace role.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "POST",
+    "path": "/api/v1/workspaces/{workspaceId}/files/upload",
+    "baseUrl": "https://zerodrive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "Must be multipart/form-data",
+        "example": "multipart/form-data"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "workspaceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the workspace",
+        "example": "workspace_abc123"
+      }
+    ],
+    "body": {
+      "contentType": "multipart/form-data",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "file",
+            "required": true,
+            "description": "The file to upload. Maximum size is 100MB."
+          },
+          "folderId": {
+            "type": "string",
+            "required": false,
+            "description": "Target folder ID within the workspace. If not provided, file is uploaded to workspace root.",
+            "example": "folder_xyz789"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "File uploaded successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string", "description": "Unique file identifier" },
+                "name": { "type": "string", "description": "Original file name" },
+                "size": { "type": "string", "description": "File size in bytes" },
+                "mimeType": { "type": "string", "description": "MIME type of the file" },
+                "extension": { "type": "string", "description": "File extension" },
+                "storageUrl": { "type": "string", "description": "URL to access the file" },
+                "isStarred": { "type": "boolean" },
+                "isShared": { "type": "boolean" },
+                "isTrashed": { "type": "boolean" },
+                "version": { "type": "integer", "description": "File version number" },
+                "createdAt": { "type": "string", "format": "date-time" },
+                "updatedAt": { "type": "string", "format": "date-time" },
+                "uploadedBy": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "email": { "type": "string" },
+                    "image": { "type": "string", "nullable": true }
+                  }
+                },
+                "folder": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "message": { "type": "string" }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "No file uploaded"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "You don't have permission to upload files to this workspace (requires EDITOR role or higher)"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Workspace not found or access denied, or folder not found in this workspace"
+      },
+      {
+        "status": 413,
+        "statusText": "Payload Too Large",
+        "description": "File too large (max 100MB) or workspace storage limit exceeded"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to upload file"
+      }
+    ]
+  }
+}

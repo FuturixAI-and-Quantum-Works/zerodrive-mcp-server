@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/folders",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Project Files",
+      "description": "Files for the new project"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "id": "clx3456789012",
+      "name": "Project Files",
+      "description": "Files for the new project",
+      "parentId": null,
+      "isStarred": false,
+      "isTrashed": false,
+      "createdAt": "2024-01-20T10:00:00Z",
+      "updatedAt": "2024-01-20T10:00:00Z"
+    }
+  }
+}

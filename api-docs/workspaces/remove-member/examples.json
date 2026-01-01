@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "DELETE",
+    "url": "/api/v1/workspaces/{workspaceId}/members/{memberId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "message": "Member removed successfully",
+      "removedMemberId": "member_xyz789",
+      "removedUserId": "user_xyz789"
+    }
+  }
+}

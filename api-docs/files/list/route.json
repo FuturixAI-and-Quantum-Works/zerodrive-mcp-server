@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "title": "List Files",
+    "description": "Retrieve a paginated list of files with optional filtering, sorting, and search capabilities.",
+    "category": "File Management",
+    "categorySlug": "files"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/files",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "folderId",
+        "type": "string",
+        "required": false,
+        "description": "Filter files by folder ID. Omit to list files in root.",
+        "example": "clx1234567890"
+      },
+      {
+        "name": "includeSubfolders",
+        "type": "boolean",
+        "required": false,
+        "description": "Include files from all subfolders recursively",
+        "default": false
+      },
+      {
+        "name": "starred",
+        "type": "boolean",
+        "required": false,
+        "description": "Filter to show only starred files",
+        "default": false
+      },
+      {
+        "name": "shared",
+        "type": "boolean",
+        "required": false,
+        "description": "Filter to show only shared files",
+        "default": false
+      },
+      {
+        "name": "trashed",
+        "type": "boolean",
+        "required": false,
+        "description": "Include trashed files in results",
+        "default": false
+      },
+      {
+        "name": "search",
+        "type": "string",
+        "required": false,
+        "description": "Search query to filter files by name",
+        "example": "report"
+      },
+      {
+        "name": "limit",
+        "type": "integer",
+        "required": false,
+        "description": "Maximum number of files to return",
+        "default": 50,
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "name": "offset",
+        "type": "integer",
+        "required": false,
+        "description": "Number of files to skip for pagination",
+        "default": 0,
+        "minimum": 0
+      },
+      {
+        "name": "sortBy",
+        "type": "string",
+        "required": false,
+        "description": "Field to sort results by",
+        "enum": ["name", "size", "createdAt", "updatedAt", "mimeType"],
+        "default": "updatedAt"
+      },
+      {
+        "name": "sortOrder",
+        "type": "string",
+        "required": false,
+        "description": "Sort order direction",
+        "enum": ["asc", "desc"],
+        "default": "desc"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Successfully retrieved file list",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "name": { "type": "string" },
+                      "size": { "type": "integer" },
+                      "mimeType": { "type": "string" },
+                      "extension": { "type": "string" },
+                      "folderId": { "type": "string", "nullable": true },
+                      "isStarred": { "type": "boolean" },
+                      "isTrashed": { "type": "boolean" },
+                      "createdAt": { "type": "string", "format": "date-time" },
+                      "updatedAt": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                },
+                "total": { "type": "integer" },
+                "limit": { "type": "integer" },
+                "offset": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Server error occurred while retrieving files"
+      }
+    ]
+  }
+}

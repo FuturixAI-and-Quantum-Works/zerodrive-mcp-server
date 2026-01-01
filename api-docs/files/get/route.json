@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "Get File",
+    "description": "Retrieve detailed metadata for a specific file by its ID.",
+    "category": "File Management",
+    "categorySlug": "files"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/files/{fileId}",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "fileId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the file",
+        "example": "clx1234567890"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Successfully retrieved file details",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "size": { "type": "integer" },
+                "mimeType": { "type": "string" },
+                "extension": { "type": "string" },
+                "description": { "type": "string", "nullable": true },
+                "folderId": { "type": "string", "nullable": true },
+                "folder": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" }
+                  }
+                },
+                "isStarred": { "type": "boolean" },
+                "isTrashed": { "type": "boolean" },
+                "trashedAt": { "type": "string", "format": "date-time", "nullable": true },
+                "tags": { "type": "array", "items": { "type": "string" } },
+                "version": { "type": "integer" },
+                "checksum": { "type": "string" },
+                "createdAt": { "type": "string", "format": "date-time" },
+                "updatedAt": { "type": "string", "format": "date-time" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "File not found or access denied"
+      }
+    ]
+  }
+}

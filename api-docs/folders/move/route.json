@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "Move Folder",
+    "description": "Move a folder to a different parent folder. Set parentId to null to move the folder to the root directory.",
+    "category": "Folder Management",
+    "categorySlug": "folders"
+  },
+  "endpoint": {
+    "method": "PUT",
+    "path": "/api/v1/folders/{folderId}/move",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["folders:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "folderId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the folder to move",
+        "example": "clx0987654321"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "parentId": {
+            "type": "string",
+            "required": true,
+            "description": "The destination parent folder ID. Use null to move to root.",
+            "nullable": true,
+            "example": "clx1234567890"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Folder moved successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "name": { "type": "string" },
+            "parentId": { "type": "string", "nullable": true },
+            "updatedAt": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Folder or destination folder not found"
+      },
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "Cannot move folder into itself or its descendants"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to move folder"
+      }
+    ]
+  }
+}

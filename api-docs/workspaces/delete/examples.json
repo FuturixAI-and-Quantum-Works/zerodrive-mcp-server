@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "DELETE",
+    "url": "/api/v1/workspaces/{workspaceId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "message": "Workspace deleted successfully",
+      "deletedWorkspaceId": "clx1234567890",
+      "storageReleased": "10737418240"
+    }
+  }
+}

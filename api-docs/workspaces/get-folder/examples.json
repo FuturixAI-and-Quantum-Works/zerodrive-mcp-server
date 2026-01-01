@@ -1,0 +1,42 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/workspaces/{workspaceId}/folders/{folderId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "folder": {
+        "id": "folder_xyz789",
+        "name": "Q4 Reports",
+        "description": "Quarterly reports for Q4 2024",
+        "color": "#3B82F6",
+        "isStarred": true,
+        "isShared": false,
+        "isTrashed": false,
+        "trashedAt": null,
+        "createdAt": "2024-01-10T09:00:00Z",
+        "updatedAt": "2024-01-20T14:30:00Z",
+        "createdBy": {
+          "id": "user_def456",
+          "name": "John Doe",
+          "email": "john@example.com",
+          "image": "https://avatars.example.com/john.jpg"
+        },
+        "parent": {
+          "id": "folder_abc123",
+          "name": "Documents"
+        },
+        "childCount": 3,
+        "fileCount": 8,
+        "path": [
+          { "id": "folder_abc123", "name": "Documents" },
+          { "id": "folder_xyz789", "name": "Q4 Reports" }
+        ]
+      }
+    }
+  }
+}

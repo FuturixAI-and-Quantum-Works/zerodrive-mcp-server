@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "title": "Endpoint Title",
+    "description": "Brief description of what this endpoint does and when to use it.",
+    "category": "Category Name",
+    "categorySlug": "category-slug"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/resource/[resourceId]",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["resource:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer eyJhbGciOiJIUzI1NiIs..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": false,
+        "description": "application/json for JSON bodies",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "resourceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier for the resource",
+        "example": "res_abc123"
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "limit",
+        "type": "integer",
+        "required": false,
+        "description": "Maximum number of items to return",
+        "default": 50,
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "name": "sortBy",
+        "type": "string",
+        "required": false,
+        "description": "Field to sort by",
+        "enum": ["createdAt", "updatedAt", "name"],
+        "default": "createdAt"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "description": "Name of the resource",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "description": "Optional description",
+            "nullable": true,
+            "maxLength": 1000
+          },
+          "tags": {
+            "type": "array",
+            "required": false,
+            "description": "List of tags",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Successfully retrieved the resource",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "createdAt": { "type": "string", "format": "date-time" },
+                "updatedAt": { "type": "string", "format": "date-time" }
+              }
+            }
+          }
+        }
+      },
+      {
+        "status": 201,
+        "statusText": "Created",
+        "description": "Resource created successfully",
+        "contentType": "application/json"
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "Invalid request body or parameters"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "Insufficient permissions"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Resource not found"
+      },
+      {
+        "status": 429,
+        "statusText": "Too Many Requests",
+        "description": "Rate limit exceeded"
+      }
+    ]
+  }
+}

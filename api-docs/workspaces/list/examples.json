@@ -1,0 +1,65 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/workspaces",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "owned": [
+        {
+          "id": "clx1234567890",
+          "name": "My Team Workspace",
+          "description": "Shared workspace for team projects",
+          "icon": "briefcase",
+          "color": "#3B82F6",
+          "storageAllocated": "10737418240",
+          "storageUsed": "2147483648",
+          "isArchived": false,
+          "createdAt": "2024-01-15T10:00:00Z",
+          "updatedAt": "2024-01-20T15:30:00Z",
+          "owner": {
+            "id": "user_abc123",
+            "name": "John Doe",
+            "email": "john@example.com",
+            "image": "https://example.com/avatar.jpg"
+          },
+          "memberCount": 5,
+          "fileCount": 42,
+          "folderCount": 8,
+          "role": "owner",
+          "isOwner": true
+        }
+      ],
+      "member": [
+        {
+          "id": "clx0987654321",
+          "name": "Design Team",
+          "description": "Shared assets and design files",
+          "icon": "palette",
+          "color": "#EC4899",
+          "storageAllocated": "5368709120",
+          "storageUsed": "1073741824",
+          "isArchived": false,
+          "createdAt": "2024-01-10T09:00:00Z",
+          "updatedAt": "2024-01-19T14:00:00Z",
+          "owner": {
+            "id": "user_xyz789",
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "image": null
+          },
+          "memberCount": 3,
+          "fileCount": 28,
+          "folderCount": 5,
+          "role": "editor",
+          "isOwner": false
+        }
+      ],
+      "total": 2
+    }
+  }
+}

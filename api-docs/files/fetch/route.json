@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "title": "Fetch File Content",
+    "description": "Stream file content directly from storage. Supports both API key and signed token authentication for flexible access control.",
+    "category": "File Management",
+    "categorySlug": "files"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/files/{fileId}/fetch",
+    "baseUrl": "https://zerodrive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:read"],
+    "alternatives": [
+      {
+        "type": "token",
+        "description": "Signed JWT token passed as query parameter for pre-authenticated URLs"
+      }
+    ]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": false,
+        "description": "Bearer token for authentication. Not required if using signed token query parameter.",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "fileId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the file to fetch",
+        "example": "clx1234567890"
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "token",
+        "type": "string",
+        "required": false,
+        "description": "Signed JWT token for authentication. Use this for pre-authenticated URLs instead of API key authentication.",
+        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      },
+      {
+        "name": "download",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "description": "When true, forces the browser to download the file as an attachment instead of displaying inline.",
+        "example": "true"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "File content streamed successfully",
+        "contentType": "application/octet-stream",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "description": "The MIME type of the file",
+            "example": "application/pdf"
+          },
+          {
+            "name": "Content-Disposition",
+            "description": "Indicates if the file should be displayed inline or downloaded",
+            "example": "inline; filename=\"document.pdf\""
+          },
+          {
+            "name": "Content-Length",
+            "description": "The size of the file in bytes",
+            "example": "1048576"
+          }
+        ],
+        "body": "Binary file content"
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication. Token may have expired.",
+        "examples": [{ "error": "Invalid token" }, { "error": "Token has expired" }]
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "User does not have permission to access this file or token does not match file.",
+        "examples": [
+          { "error": "Token does not match file" },
+          { "error": "You do not have permission to access this file" }
+        ]
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "File not found or has been trashed"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to fetch file from storage"
+      }
+    ]
+  },
+  "notes": [
+    "This endpoint streams file content directly, unlike the /download endpoint which returns a signed URL.",
+    "Use the /signed-url endpoint to generate tokens for this endpoint.",
+    "Files in trash cannot be fetched using this endpoint.",
+    "Cache headers are set to prevent caching of file content."
+  ]
+}

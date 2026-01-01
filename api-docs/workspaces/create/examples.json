@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/workspaces",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "My Team Workspace",
+      "description": "Shared workspace for team projects",
+      "icon": "briefcase",
+      "color": "#3B82F6",
+      "storageAllocation": "10737418240"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "workspace": {
+        "id": "clx1234567890",
+        "name": "My Team Workspace",
+        "description": "Shared workspace for team projects",
+        "icon": "briefcase",
+        "color": "#3B82F6",
+        "storageAllocated": "10737418240",
+        "storageUsed": "0",
+        "isArchived": false,
+        "createdAt": "2024-01-15T10:00:00Z",
+        "updatedAt": "2024-01-15T10:00:00Z",
+        "owner": {
+          "id": "user_abc123",
+          "name": "John Doe",
+          "email": "john@example.com",
+          "image": "https://example.com/avatar.jpg"
+        },
+        "memberCount": 0,
+        "fileCount": 0,
+        "folderCount": 0,
+        "role": "owner",
+        "isOwner": true
+      },
+      "message": "Workspace created successfully"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "title": "Delete Folder",
+    "description": "Delete a folder and all its contents. By default, the folder is moved to trash (soft delete). Use the permanent query parameter to permanently delete.",
+    "category": "Folder Management",
+    "categorySlug": "folders"
+  },
+  "endpoint": {
+    "method": "DELETE",
+    "path": "/api/v1/folders/{folderId}",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["folders:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "folderId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the folder to delete",
+        "example": "clx0987654321"
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "permanent",
+        "type": "boolean",
+        "required": false,
+        "description": "If true, permanently deletes the folder and all contents instead of moving to trash",
+        "default": false
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Folder deleted successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Folder not found or access denied"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to delete folder"
+      }
+    ]
+  }
+}

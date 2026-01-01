@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "title": "Create Workspace",
+    "description": "Create a new workspace with allocated storage. The storage is deducted from the user's available quota.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "POST",
+    "path": "/api/v1/workspaces",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "description": "Workspace name (max 100 characters)",
+            "example": "My Team Workspace"
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "description": "Workspace description",
+            "example": "Shared workspace for team projects"
+          },
+          "icon": {
+            "type": "string",
+            "required": false,
+            "description": "Icon name or emoji for the workspace",
+            "example": "briefcase"
+          },
+          "color": {
+            "type": "string",
+            "required": false,
+            "description": "Hex color code for the workspace",
+            "example": "#3B82F6"
+          },
+          "storageAllocation": {
+            "type": "string",
+            "required": true,
+            "description": "Storage allocation in bytes (minimum 104857600 = 100MB)",
+            "example": "10737418240"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 201,
+        "statusText": "Created",
+        "description": "Workspace created successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "workspace": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string", "nullable": true },
+                    "icon": { "type": "string", "nullable": true },
+                    "color": { "type": "string", "nullable": true },
+                    "storageAllocated": { "type": "string" },
+                    "storageUsed": { "type": "string" },
+                    "isArchived": { "type": "boolean" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string", "nullable": true },
+                        "email": { "type": "string" },
+                        "image": { "type": "string", "nullable": true }
+                      }
+                    },
+                    "memberCount": { "type": "integer" },
+                    "fileCount": { "type": "integer" },
+                    "folderCount": { "type": "integer" },
+                    "role": { "type": "string" },
+                    "isOwner": { "type": "boolean" }
+                  }
+                },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "Invalid request body or insufficient storage quota"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to create workspace"
+      }
+    ]
+  }
+}

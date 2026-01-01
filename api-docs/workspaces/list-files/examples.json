@@ -1,0 +1,78 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/workspaces/{workspaceId}/files",
+    "queryParams": {
+      "folderId": "null",
+      "limit": 20,
+      "sortBy": "updatedAt",
+      "sortOrder": "desc"
+    },
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "files": [
+        {
+          "id": "file_abc123",
+          "name": "quarterly-report.pdf",
+          "description": "Q4 2024 financial report",
+          "size": "1048576",
+          "mimeType": "application/pdf",
+          "extension": ".pdf",
+          "storageUrl": "https://storage.zerodrive.futurixai.com/workspaces/workspace_abc123/2024/01/20/report.pdf",
+          "thumbnailUrl": null,
+          "isStarred": true,
+          "isShared": false,
+          "isTrashed": false,
+          "trashedAt": null,
+          "version": 1,
+          "createdAt": "2024-01-20T10:30:00Z",
+          "updatedAt": "2024-01-20T10:30:00Z",
+          "lastAccessedAt": "2024-01-21T14:00:00Z",
+          "uploadedBy": {
+            "id": "user_def456",
+            "name": "John Doe",
+            "email": "john@example.com",
+            "image": "https://avatars.example.com/john.jpg"
+          },
+          "folder": null,
+          "tags": ["finance", "quarterly"]
+        },
+        {
+          "id": "file_xyz789",
+          "name": "presentation.pptx",
+          "description": null,
+          "size": "2097152",
+          "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "extension": ".pptx",
+          "storageUrl": "https://storage.zerodrive.futurixai.com/workspaces/workspace_abc123/2024/01/19/presentation.pptx",
+          "thumbnailUrl": "https://storage.zerodrive.futurixai.com/thumbnails/xyz789.jpg",
+          "isStarred": false,
+          "isShared": true,
+          "isTrashed": false,
+          "trashedAt": null,
+          "version": 2,
+          "createdAt": "2024-01-19T09:00:00Z",
+          "updatedAt": "2024-01-20T11:00:00Z",
+          "lastAccessedAt": "2024-01-20T15:30:00Z",
+          "uploadedBy": {
+            "id": "user_ghi012",
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "image": null
+          },
+          "folder": null,
+          "tags": []
+        }
+      ],
+      "total": 45,
+      "limit": 20,
+      "offset": 0,
+      "hasMore": true
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/workspaces/{workspaceId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "id": "clx1234567890",
+      "name": "My Team Workspace",
+      "description": "Shared workspace for team projects",
+      "icon": "briefcase",
+      "color": "#3B82F6",
+      "storageAllocated": "10737418240",
+      "storageUsed": "2147483648",
+      "isArchived": false,
+      "archivedAt": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-20T15:30:00Z",
+      "owner": {
+        "id": "user_abc123",
+        "name": "John Doe",
+        "email": "john@example.com",
+        "image": "https://example.com/avatar.jpg"
+      },
+      "members": [
+        {
+          "id": "member_xyz789",
+          "userId": "user_xyz789",
+          "role": "editor",
+          "emailNotifications": true,
+          "joinedAt": "2024-01-16T09:00:00Z",
+          "user": {
+            "id": "user_xyz789",
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "image": null
+          }
+        }
+      ],
+      "memberCount": 1,
+      "fileCount": 42,
+      "folderCount": 8,
+      "pendingInvitations": 2,
+      "role": "owner",
+      "isOwner": true,
+      "permissions": {
+        "canUpload": true,
+        "canDelete": true,
+        "canManageMembers": true,
+        "canManageSettings": true,
+        "canDeleteWorkspace": true,
+        "canTransferOwnership": true
+      }
+    }
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "title": "Add Workspace Member",
+    "description": "Invite a new member to the workspace by email. The invitee will receive an email notification with a link to accept the invitation.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "POST",
+    "path": "/api/v1/workspaces/{workspaceId}/members",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:write", "workspaces:members"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "workspaceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the workspace",
+        "example": "clx1234567890"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "required": true,
+            "description": "Email address of the user to invite",
+            "format": "email",
+            "example": "newmember@example.com"
+          },
+          "role": {
+            "type": "string",
+            "required": false,
+            "description": "Role to assign to the new member",
+            "enum": ["admin", "editor", "viewer"],
+            "default": "viewer"
+          },
+          "message": {
+            "type": "string",
+            "required": false,
+            "description": "Optional message to include in the invitation email",
+            "example": "Join our team workspace!"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 201,
+        "statusText": "Created",
+        "description": "Invitation sent successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "invitation": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "email": { "type": "string" },
+                    "role": { "type": "string" },
+                    "status": { "type": "string", "enum": ["pending"] },
+                    "expiresAt": { "type": "string", "format": "date-time" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "invitedBy": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string", "nullable": true },
+                        "email": { "type": "string" }
+                      }
+                    }
+                  }
+                },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "Invalid email, user already a member, or invitation already pending"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "Insufficient permissions to invite members"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Workspace not found or access denied"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to invite member"
+      }
+    ]
+  }
+}

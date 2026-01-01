@@ -1,0 +1,44 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/workspaces/{workspaceId}/files/upload",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "multipart/form-data"
+    },
+    "body": {
+      "file": "(binary file data)",
+      "folderId": "folder_xyz789"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "file": {
+        "id": "file_abc123",
+        "name": "quarterly-report.pdf",
+        "size": "1048576",
+        "mimeType": "application/pdf",
+        "extension": ".pdf",
+        "storageUrl": "https://storage.zerodrive.futurixai.com/workspaces/workspace_abc123/2024/01/20/a1b2c3d4e5f6.pdf",
+        "isStarred": false,
+        "isShared": false,
+        "isTrashed": false,
+        "version": 1,
+        "createdAt": "2024-01-20T10:30:00Z",
+        "updatedAt": "2024-01-20T10:30:00Z",
+        "uploadedBy": {
+          "id": "user_def456",
+          "name": "John Doe",
+          "email": "john@example.com",
+          "image": "https://avatars.example.com/john.jpg"
+        },
+        "folder": {
+          "id": "folder_xyz789",
+          "name": "Reports"
+        }
+      },
+      "message": "File uploaded successfully"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "request": {
+    "method": "PATCH",
+    "url": "/api/v1/workspaces/{workspaceId}/folders/{folderId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Renamed Folder",
+      "description": "Updated folder description",
+      "color": "#10B981",
+      "isStarred": true
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "folder": {
+        "id": "folder_xyz789",
+        "name": "Renamed Folder",
+        "description": "Updated folder description",
+        "color": "#10B981",
+        "isStarred": true,
+        "isShared": false,
+        "isTrashed": false,
+        "trashedAt": null,
+        "createdAt": "2024-01-10T09:00:00Z",
+        "updatedAt": "2024-01-20T15:00:00Z",
+        "createdBy": {
+          "id": "user_def456",
+          "name": "John Doe",
+          "email": "john@example.com",
+          "image": "https://avatars.example.com/john.jpg"
+        },
+        "parent": {
+          "id": "folder_abc123",
+          "name": "Documents"
+        }
+      },
+      "message": "Folder updated successfully"
+    }
+  }
+}

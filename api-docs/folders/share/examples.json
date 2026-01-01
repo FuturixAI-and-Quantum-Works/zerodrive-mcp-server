@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/folders/{folderId}/share",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "emails": ["colleague@example.com"],
+      "role": "editor",
+      "message": "Here are the project files"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "message": "Folder shared successfully",
+      "shareLink": "https://zerodrive.futurixai.com/drive/shared/folder/clx0987654321",
+      "sharedWith": ["colleague@example.com"]
+    }
+  }
+}

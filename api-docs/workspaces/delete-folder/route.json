@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "title": "Delete Workspace Folder",
+    "description": "Delete a folder from a workspace. By default, folders are moved to trash (soft delete). Use the permanent query parameter to permanently delete a folder and all its contents.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "DELETE",
+    "path": "/api/v1/workspaces/{workspaceId}/folders/{folderId}",
+    "baseUrl": "https://zerodrive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:delete"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "workspaceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the workspace",
+        "example": "workspace_abc123"
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the folder to delete",
+        "example": "folder_xyz789"
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "permanent",
+        "type": "boolean",
+        "required": false,
+        "description": "If true, permanently deletes the folder and all contents instead of moving to trash. This action cannot be undone.",
+        "default": false
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Folder deleted successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "Success message indicating if folder was moved to trash or permanently deleted"
+            },
+            "folderId": { "type": "string", "description": "ID of the deleted folder" }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "You don't have permission to delete folders in this workspace"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Workspace not found, access denied, or folder not found"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to delete folder"
+      }
+    ]
+  }
+}

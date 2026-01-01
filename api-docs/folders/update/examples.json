@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "PATCH",
+    "url": "/api/v1/folders/{folderId}",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Important Documents",
+      "color": "#ff5722",
+      "isStarred": true
+    }
+  },
+  "response": {
+    "id": "clx0987654321",
+    "name": "Important Documents",
+    "description": "Important documents",
+    "color": "#ff5722",
+    "parentId": null,
+    "isStarred": true,
+    "isTrashed": false,
+    "updatedAt": "2024-01-20T15:30:00Z"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "DELETE",
+    "url": "/api/v1/workspaces/{workspaceId}/folders/{folderId}",
+    "queryParams": {
+      "permanent": false
+    },
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "message": "Folder moved to trash",
+      "folderId": "folder_xyz789"
+    }
+  }
+}

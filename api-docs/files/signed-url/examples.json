@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/files/{fileId}/signed-url",
+    "queryParams": {
+      "expires": 3600
+    },
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "url": "https://zerodrive.futurixai.com/api/v1/files/clx1234567890/fetch?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "expiresIn": 3600,
+      "expiresAt": "2024-03-01T13:00:00.000Z",
+      "fileName": "document.pdf"
+    }
+  }
+}

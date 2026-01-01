@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/workspaces/{workspaceId}/members",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email": "newmember@example.com",
+      "role": "editor",
+      "message": "Join our team workspace!"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "invitation": {
+        "id": "inv_abc123",
+        "email": "newmember@example.com",
+        "role": "editor",
+        "status": "pending",
+        "expiresAt": "2024-01-27T10:00:00Z",
+        "createdAt": "2024-01-20T10:00:00Z",
+        "invitedBy": {
+          "id": "user_abc123",
+          "name": "John Doe",
+          "email": "john@example.com"
+        }
+      },
+      "message": "Invitation sent to newmember@example.com"
+    }
+  }
+}

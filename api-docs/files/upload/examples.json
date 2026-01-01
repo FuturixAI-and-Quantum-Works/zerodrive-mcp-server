@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/files/upload",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "multipart/form-data"
+    },
+    "body": {
+      "file0": "@/path/to/document.pdf",
+      "file1": "@/path/to/image.png",
+      "folderPath": "Documents/Reports"
+    }
+  },
+  "response": {
+    "success": true,
+    "message": "Successfully uploaded 2 file(s)",
+    "data": {
+      "folderPath": "Documents/Reports",
+      "folderId": "clx0987654321",
+      "uploadedFiles": [
+        {
+          "id": "clx1234567890",
+          "name": "document.pdf",
+          "size": 2457600,
+          "mimeType": "application/pdf",
+          "storageKey": "files/user123/2024/01/15/abc123.pdf"
+        },
+        {
+          "id": "clx2345678901",
+          "name": "image.png",
+          "size": 153600,
+          "mimeType": "image/png",
+          "storageKey": "files/user123/2024/01/15/def456.png"
+        }
+      ]
+    }
+  }
+}

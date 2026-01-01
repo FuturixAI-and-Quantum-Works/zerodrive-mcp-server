@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "Generate Signed URL",
+    "description": "Generate a time-limited signed URL for accessing a file without requiring API key authentication. Useful for sharing files or embedding in applications.",
+    "category": "File Management",
+    "categorySlug": "files"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/files/{fileId}/signed-url",
+    "baseUrl": "https://zerodrive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "fileId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the file",
+        "example": "clx1234567890"
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "expires",
+        "type": "integer",
+        "required": false,
+        "default": 3600,
+        "description": "URL validity duration in seconds. Default: 3600 (1 hour), Maximum: 604800 (7 days)",
+        "example": "7200"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Signed URL generated successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "The signed URL for accessing the file"
+                },
+                "expiresIn": {
+                  "type": "integer",
+                  "description": "Time in seconds until the URL expires"
+                },
+                "expiresAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "ISO 8601 timestamp when the URL expires"
+                },
+                "fileName": {
+                  "type": "string",
+                  "description": "The name of the file"
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "Invalid expires parameter"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "User does not have permission to access this file"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "File not found or has been trashed"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to generate signed URL"
+      }
+    ]
+  },
+  "notes": [
+    "The generated URL points to the /fetch endpoint with a JWT token.",
+    "URLs can be used without API key authentication, making them suitable for sharing or embedding.",
+    "Files in trash cannot have signed URLs generated."
+  ]
+}

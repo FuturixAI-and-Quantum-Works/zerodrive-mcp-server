@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "title": "Remove Workspace Member",
+    "description": "Remove a member from the workspace. Admins can remove editors and viewers. Owners can remove anyone except themselves. Members can also leave a workspace themselves.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "DELETE",
+    "path": "/api/v1/workspaces/{workspaceId}/members/{memberId}",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:write", "workspaces:members"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "workspaceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the workspace",
+        "example": "clx1234567890"
+      },
+      {
+        "name": "memberId",
+        "type": "string",
+        "required": true,
+        "description": "The member record ID (not the user ID)",
+        "example": "member_xyz789"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Member removed successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "removedMemberId": { "type": "string" },
+                "removedUserId": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "Insufficient permissions to remove this member"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Member not found or workspace access denied"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to remove member"
+      }
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/workspaces/{workspaceId}/members",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "owner": {
+        "id": "user_abc123",
+        "name": "John Doe",
+        "email": "john@example.com",
+        "image": "https://example.com/avatar.jpg",
+        "role": "owner",
+        "isOwner": true
+      },
+      "members": [
+        {
+          "id": "member_xyz789",
+          "userId": "user_xyz789",
+          "role": "editor",
+          "emailNotifications": true,
+          "joinedAt": "2024-01-16T09:00:00Z",
+          "user": {
+            "id": "user_xyz789",
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "image": null
+          },
+          "isOwner": false
+        },
+        {
+          "id": "member_def456",
+          "userId": "user_def456",
+          "role": "viewer",
+          "emailNotifications": false,
+          "joinedAt": "2024-01-18T14:30:00Z",
+          "user": {
+            "id": "user_def456",
+            "name": "Bob Wilson",
+            "email": "bob@example.com",
+            "image": null
+          },
+          "isOwner": false
+        }
+      ],
+      "pendingInvitations": [
+        {
+          "id": "inv_abc123",
+          "email": "newmember@example.com",
+          "role": "editor",
+          "expiresAt": "2024-01-27T10:00:00Z",
+          "createdAt": "2024-01-20T10:00:00Z",
+          "invitedBy": {
+            "id": "user_abc123",
+            "name": "John Doe",
+            "email": "john@example.com"
+          }
+        }
+      ],
+      "totalMembers": 3
+    }
+  }
+}

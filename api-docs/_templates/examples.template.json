@@ -1,0 +1,19 @@
+{
+  "request": {
+    "curl": "curl -X GET 'https://drive.futurixai.com/api/resource/res_abc123' \\\n  -H 'Authorization: Bearer YOUR_TOKEN' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"name\": \"Example Resource\", \"description\": \"Optional description\"}'",
+    "body": {
+      "name": "Example Resource",
+      "description": "Optional description"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "id": "res_abc123",
+      "name": "Example Resource",
+      "description": "Optional description",
+      "createdAt": "2024-01-15T10:30:00Z",
+      "updatedAt": "2024-01-15T10:30:00Z"
+    }
+  }
+}

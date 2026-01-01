@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "title": "Update Folder",
+    "description": "Update folder properties such as name, description, color, or starred status. Can also restore a folder from trash.",
+    "category": "Folder Management",
+    "categorySlug": "folders"
+  },
+  "endpoint": {
+    "method": "PATCH",
+    "path": "/api/v1/folders/{folderId}",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["folders:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "folderId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the folder to update",
+        "example": "clx0987654321"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": false,
+            "description": "New name for the folder",
+            "example": "Updated Folder Name"
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "description": "Folder description",
+            "nullable": true,
+            "example": "Updated description"
+          },
+          "color": {
+            "type": "string",
+            "required": false,
+            "description": "Folder color (hex code)",
+            "example": "#ff5722"
+          },
+          "isStarred": {
+            "type": "boolean",
+            "required": false,
+            "description": "Star or unstar the folder",
+            "example": true
+          },
+          "action": {
+            "type": "string",
+            "required": false,
+            "description": "Special action. Use 'restore' to restore folder from trash.",
+            "enum": ["restore"]
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Folder updated successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "name": { "type": "string" },
+            "description": { "type": "string", "nullable": true },
+            "color": { "type": "string", "nullable": true },
+            "parentId": { "type": "string", "nullable": true },
+            "isStarred": { "type": "boolean" },
+            "isTrashed": { "type": "boolean" },
+            "updatedAt": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Folder not found or access denied"
+      },
+      {
+        "status": 409,
+        "statusText": "Conflict",
+        "description": "A folder with this name already exists in the same location"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to update folder"
+      }
+    ]
+  }
+}

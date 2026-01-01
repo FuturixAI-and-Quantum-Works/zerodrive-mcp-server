@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/folders",
+    "queryParams": {
+      "limit": 10,
+      "sortBy": "name",
+      "sortOrder": "asc"
+    },
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123..."
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "folders": [
+        {
+          "id": "clx0987654321",
+          "name": "Documents",
+          "description": "Important documents",
+          "color": "#4285f4",
+          "parentId": null,
+          "isStarred": true,
+          "isTrashed": false,
+          "createdAt": "2024-01-10T08:00:00Z",
+          "updatedAt": "2024-01-15T10:30:00Z"
+        },
+        {
+          "id": "clx1234567890",
+          "name": "Projects",
+          "description": null,
+          "color": "#34a853",
+          "parentId": null,
+          "isStarred": false,
+          "isTrashed": false,
+          "createdAt": "2024-01-05T14:00:00Z",
+          "updatedAt": "2024-01-05T14:00:00Z"
+        }
+      ],
+      "total": 15,
+      "limit": 10,
+      "offset": 0
+    }
+  }
+}

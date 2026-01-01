@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "List Workspaces",
+    "description": "Retrieve all workspaces the authenticated user owns or is a member of. Returns two arrays: owned workspaces and member workspaces.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/workspaces",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Workspaces retrieved successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "owned": {
+                  "type": "array",
+                  "description": "Workspaces owned by the user",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "name": { "type": "string" },
+                      "description": { "type": "string", "nullable": true },
+                      "icon": { "type": "string", "nullable": true },
+                      "color": { "type": "string", "nullable": true },
+                      "storageAllocated": {
+                        "type": "string",
+                        "description": "Storage quota in bytes"
+                      },
+                      "storageUsed": { "type": "string", "description": "Storage used in bytes" },
+                      "isArchived": { "type": "boolean" },
+                      "createdAt": { "type": "string", "format": "date-time" },
+                      "updatedAt": { "type": "string", "format": "date-time" },
+                      "owner": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "name": { "type": "string", "nullable": true },
+                          "email": { "type": "string" },
+                          "image": { "type": "string", "nullable": true }
+                        }
+                      },
+                      "memberCount": { "type": "integer" },
+                      "fileCount": { "type": "integer" },
+                      "folderCount": { "type": "integer" },
+                      "role": { "type": "string", "enum": ["owner", "admin", "editor", "viewer"] },
+                      "isOwner": { "type": "boolean" }
+                    }
+                  }
+                },
+                "member": {
+                  "type": "array",
+                  "description": "Workspaces where the user is a member but not owner",
+                  "items": {
+                    "$ref": "#/responses/success/0/schema/properties/data/properties/owned/items"
+                  }
+                },
+                "total": { "type": "integer", "description": "Total number of workspaces" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to list workspaces"
+      }
+    ]
+  }
+}

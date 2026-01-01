@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "title": "List Trash",
+    "description": "Retrieve all files and folders in the trash. Items remain in trash until permanently deleted or restored.",
+    "category": "Trash Management",
+    "categorySlug": "trash"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/trash",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:read", "folders:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "limit",
+        "type": "integer",
+        "required": false,
+        "description": "Number of items to return",
+        "default": 50,
+        "example": 20
+      },
+      {
+        "name": "offset",
+        "type": "integer",
+        "required": false,
+        "description": "Number of items to skip for pagination",
+        "default": 0,
+        "example": 0
+      },
+      {
+        "name": "sortBy",
+        "type": "string",
+        "required": false,
+        "description": "Field to sort by",
+        "enum": ["name", "size", "trashedAt", "updatedAt", "createdAt"],
+        "default": "trashedAt"
+      },
+      {
+        "name": "sortOrder",
+        "type": "string",
+        "required": false,
+        "description": "Sort direction",
+        "enum": ["asc", "desc"],
+        "default": "desc"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Trashed items retrieved successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "name": { "type": "string" },
+                      "mimeType": { "type": "string" },
+                      "size": { "type": "integer" },
+                      "isTrashed": { "type": "boolean" },
+                      "trashedAt": { "type": "string", "format": "date-time" },
+                      "createdAt": { "type": "string", "format": "date-time" },
+                      "updatedAt": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                },
+                "folders": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "name": { "type": "string" },
+                      "isTrashed": { "type": "boolean" },
+                      "trashedAt": { "type": "string", "format": "date-time" },
+                      "createdAt": { "type": "string", "format": "date-time" },
+                      "updatedAt": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                },
+                "total": { "type": "integer" },
+                "hasMore": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to list trashed items"
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "title": "Get Folder",
+    "description": "Retrieve detailed information about a specific folder by its ID.",
+    "category": "Folder Management",
+    "categorySlug": "folders"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/folders/{folderId}",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["folders:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "folderId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the folder",
+        "example": "clx0987654321"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Successfully retrieved folder details",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "name": { "type": "string" },
+            "description": { "type": "string", "nullable": true },
+            "color": { "type": "string", "nullable": true },
+            "parentId": { "type": "string", "nullable": true },
+            "parent": {
+              "type": "object",
+              "nullable": true,
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" }
+              }
+            },
+            "isStarred": { "type": "boolean" },
+            "isTrashed": { "type": "boolean" },
+            "trashedAt": { "type": "string", "format": "date-time", "nullable": true },
+            "createdAt": { "type": "string", "format": "date-time" },
+            "updatedAt": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Folder not found or access denied"
+      }
+    ]
+  }
+}

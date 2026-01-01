@@ -1,0 +1,17 @@
+{
+  "name": "Sample JSON",
+  "version": "1.0.0",
+  "description": "A sample JSON file for testing",
+  "data": {
+    "items": [
+      { "id": 1, "value": "first" },
+      { "id": 2, "value": "second" },
+      { "id": 3, "value": "third" }
+    ],
+    "metadata": {
+      "created": "2024-01-01T00:00:00Z",
+      "modified": "2024-01-01T00:00:00Z"
+    }
+  },
+  "tags": ["test", "sample", "fixture"]
+}

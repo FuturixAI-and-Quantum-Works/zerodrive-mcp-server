@@ -1,0 +1,248 @@
+{
+  "apiVersion": "v1",
+  "baseUrl": "https://drive.futurixai.com",
+  "title": "ZeroDrive Public API",
+  "description": "ZeroDrive API allows you to programmatically manage files, folders, workspaces, and more in your cloud storage.",
+  "authentication": {
+    "type": "bearer",
+    "description": "All API requests require authentication via Bearer token in the Authorization header.",
+    "header": "Authorization",
+    "format": "Bearer <API_KEY>",
+    "example": "Bearer zd_live_abc123..."
+  },
+  "rateLimits": {
+    "read": { "requests": 100, "window": "1m" },
+    "write": { "requests": 30, "window": "1m" }
+  },
+  "categories": [
+    {
+      "name": "File Management",
+      "slug": "files",
+      "description": "Upload, download, organize, and share files",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/files", "title": "List Files", "docs": "files/list" },
+        {
+          "method": "GET",
+          "path": "/api/v1/files/{fileId}",
+          "title": "Get File",
+          "docs": "files/get"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/files/upload",
+          "title": "Upload File",
+          "docs": "files/upload"
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/v1/files/{fileId}",
+          "title": "Update File",
+          "docs": "files/update"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/v1/files/{fileId}",
+          "title": "Delete File",
+          "docs": "files/delete"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/files/{fileId}/download",
+          "title": "Download File",
+          "docs": "files/download"
+        },
+        {
+          "method": "PUT",
+          "path": "/api/v1/files/{fileId}/move",
+          "title": "Move File",
+          "docs": "files/move"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/files/{fileId}/share",
+          "title": "Share File",
+          "docs": "files/share"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/files/{fileId}/signed-url",
+          "title": "Get Signed URL",
+          "docs": "files/signed-url"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/files/{fileId}/fetch",
+          "title": "Fetch File",
+          "docs": "files/fetch"
+        }
+      ]
+    },
+    {
+      "name": "Folder Management",
+      "slug": "folders",
+      "description": "Create, organize, and manage folder hierarchies",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/v1/folders",
+          "title": "List Folders",
+          "docs": "folders/list"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/folders",
+          "title": "Create Folder",
+          "docs": "folders/create"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/folders/{folderId}",
+          "title": "Get Folder",
+          "docs": "folders/get"
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/v1/folders/{folderId}",
+          "title": "Update Folder",
+          "docs": "folders/update"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/v1/folders/{folderId}",
+          "title": "Delete Folder",
+          "docs": "folders/delete"
+        },
+        {
+          "method": "PUT",
+          "path": "/api/v1/folders/{folderId}/move",
+          "title": "Move Folder",
+          "docs": "folders/move"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/folders/{folderId}/share",
+          "title": "Share Folder",
+          "docs": "folders/share"
+        }
+      ]
+    },
+    {
+      "name": "Workspace Management",
+      "slug": "workspaces",
+      "description": "Create and manage collaborative workspaces with team members",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces",
+          "title": "List Workspaces",
+          "docs": "workspaces/list"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/workspaces",
+          "title": "Create Workspace",
+          "docs": "workspaces/create"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/{workspaceId}",
+          "title": "Get Workspace",
+          "docs": "workspaces/get"
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/v1/workspaces/{workspaceId}",
+          "title": "Update Workspace",
+          "docs": "workspaces/update"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/v1/workspaces/{workspaceId}",
+          "title": "Delete Workspace",
+          "docs": "workspaces/delete"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/{workspaceId}/members",
+          "title": "List Members",
+          "docs": "workspaces/list-members"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/workspaces/{workspaceId}/members",
+          "title": "Add Member",
+          "docs": "workspaces/add-member"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/v1/workspaces/{workspaceId}/members/{memberId}",
+          "title": "Remove Member",
+          "docs": "workspaces/remove-member"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/workspaces/{workspaceId}/files/upload",
+          "title": "Upload File",
+          "docs": "workspaces/upload-file"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/{workspaceId}/files",
+          "title": "List Files",
+          "docs": "workspaces/list-files"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/{workspaceId}/folders",
+          "title": "List Folders",
+          "docs": "workspaces/list-folders"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/workspaces/{workspaceId}/folders",
+          "title": "Create Folder",
+          "docs": "workspaces/create-folder"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/{workspaceId}/folders/{folderId}",
+          "title": "Get Folder",
+          "docs": "workspaces/get-folder"
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/v1/workspaces/{workspaceId}/folders/{folderId}",
+          "title": "Update Folder",
+          "docs": "workspaces/update-folder"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/v1/workspaces/{workspaceId}/folders/{folderId}",
+          "title": "Delete Folder",
+          "docs": "workspaces/delete-folder"
+        }
+      ]
+    },
+    {
+      "name": "Trash Management",
+      "slug": "trash",
+      "description": "View, restore, and permanently delete trashed items",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/trash", "title": "List Trash", "docs": "trash/list" },
+        {
+          "method": "POST",
+          "path": "/api/v1/trash/{itemId}/restore",
+          "title": "Restore from Trash",
+          "docs": "trash/restore"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/v1/trash",
+          "title": "Empty Trash",
+          "docs": "trash/empty"
+        }
+      ]
+    }
+  ],
+  "totalEndpoints": 35
+}

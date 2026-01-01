@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "Share File",
+    "description": "Share a file with other users by email. Recipients will receive an email notification and can access the file through their ZeroDrive account.",
+    "category": "File Management",
+    "categorySlug": "files"
+  },
+  "endpoint": {
+    "method": "POST",
+    "path": "/api/v1/files/{fileId}/share",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:write", "files:share"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "fileId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the file to share",
+        "example": "clx1234567890"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "emails": {
+            "type": "array",
+            "required": true,
+            "description": "Email addresses of users to share with",
+            "items": { "type": "string", "format": "email" },
+            "example": ["colleague@example.com", "partner@example.com"]
+          },
+          "role": {
+            "type": "string",
+            "required": false,
+            "description": "Permission level for shared users",
+            "enum": ["viewer", "editor"],
+            "default": "viewer"
+          },
+          "canShare": {
+            "type": "boolean",
+            "required": false,
+            "description": "Whether recipients can re-share the file",
+            "default": false
+          },
+          "message": {
+            "type": "string",
+            "required": false,
+            "description": "Optional message to include in the share notification",
+            "example": "Please review this report"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "File shared successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "shareLink": { "type": "string" },
+                "sharedWith": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "No email addresses provided"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "File not found"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to share file"
+      }
+    ]
+  }
+}

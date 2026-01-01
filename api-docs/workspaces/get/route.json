@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "title": "Get Workspace",
+    "description": "Retrieve detailed information about a specific workspace, including members, storage usage, and user permissions.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/workspaces/{workspaceId}",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "workspaceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the workspace",
+        "example": "clx1234567890"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Workspace details retrieved successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "description": { "type": "string", "nullable": true },
+                "icon": { "type": "string", "nullable": true },
+                "color": { "type": "string", "nullable": true },
+                "storageAllocated": { "type": "string" },
+                "storageUsed": { "type": "string" },
+                "isArchived": { "type": "boolean" },
+                "archivedAt": { "type": "string", "format": "date-time", "nullable": true },
+                "createdAt": { "type": "string", "format": "date-time" },
+                "updatedAt": { "type": "string", "format": "date-time" },
+                "owner": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string", "nullable": true },
+                    "email": { "type": "string" },
+                    "image": { "type": "string", "nullable": true }
+                  }
+                },
+                "members": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "userId": { "type": "string" },
+                      "role": { "type": "string", "enum": ["admin", "editor", "viewer"] },
+                      "emailNotifications": { "type": "boolean" },
+                      "joinedAt": { "type": "string", "format": "date-time" },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "name": { "type": "string", "nullable": true },
+                          "email": { "type": "string" },
+                          "image": { "type": "string", "nullable": true }
+                        }
+                      }
+                    }
+                  }
+                },
+                "memberCount": { "type": "integer" },
+                "fileCount": { "type": "integer" },
+                "folderCount": { "type": "integer" },
+                "pendingInvitations": { "type": "integer" },
+                "role": { "type": "string", "enum": ["owner", "admin", "editor", "viewer"] },
+                "isOwner": { "type": "boolean" },
+                "permissions": {
+                  "type": "object",
+                  "properties": {
+                    "canUpload": { "type": "boolean" },
+                    "canDelete": { "type": "boolean" },
+                    "canManageMembers": { "type": "boolean" },
+                    "canManageSettings": { "type": "boolean" },
+                    "canDeleteWorkspace": { "type": "boolean" },
+                    "canTransferOwnership": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Workspace not found or access denied"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to get workspace"
+      }
+    ]
+  }
+}

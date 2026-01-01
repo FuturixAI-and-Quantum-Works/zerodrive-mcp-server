@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "Empty Trash",
+    "description": "Permanently delete all items in the trash. This action cannot be undone and will free up storage space.",
+    "category": "Trash Management",
+    "categorySlug": "trash"
+  },
+  "endpoint": {
+    "method": "DELETE",
+    "path": "/api/v1/trash",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["files:delete", "folders:delete"]
+  },
+  "rateLimit": {
+    "requests": 10,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Trash emptied successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "deletedFiles": {
+                  "type": "integer",
+                  "description": "Number of files permanently deleted"
+                },
+                "deletedFolders": {
+                  "type": "integer",
+                  "description": "Number of folders permanently deleted"
+                },
+                "storageFreed": { "type": "integer", "description": "Storage freed in bytes" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to clear trash"
+      }
+    ]
+  }
+}

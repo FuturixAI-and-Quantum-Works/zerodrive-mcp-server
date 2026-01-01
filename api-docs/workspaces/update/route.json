@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "title": "Update Workspace",
+    "description": "Update workspace settings such as name, description, icon, color, or archive status. Requires admin or owner permissions.",
+    "category": "Workspace Management",
+    "categorySlug": "workspaces"
+  },
+  "endpoint": {
+    "method": "PATCH",
+    "path": "/api/v1/workspaces/{workspaceId}",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["workspaces:write"]
+  },
+  "rateLimit": {
+    "requests": 30,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      },
+      {
+        "name": "Content-Type",
+        "type": "string",
+        "required": true,
+        "description": "application/json",
+        "example": "application/json"
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "workspaceId",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the workspace to update",
+        "example": "clx1234567890"
+      }
+    ],
+    "body": {
+      "contentType": "application/json",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": false,
+            "description": "New workspace name (max 100 characters)",
+            "example": "Updated Workspace Name"
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "description": "New workspace description (set to null to clear)",
+            "example": "Updated description"
+          },
+          "icon": {
+            "type": "string",
+            "required": false,
+            "description": "New icon name or emoji",
+            "example": "folder"
+          },
+          "color": {
+            "type": "string",
+            "required": false,
+            "description": "New hex color code",
+            "example": "#10B981"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "required": false,
+            "description": "Archive or unarchive the workspace (owner only)",
+            "example": false
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Workspace updated successfully",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "workspace": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string", "nullable": true },
+                    "icon": { "type": "string", "nullable": true },
+                    "color": { "type": "string", "nullable": true },
+                    "storageAllocated": { "type": "string" },
+                    "storageUsed": { "type": "string" },
+                    "isArchived": { "type": "boolean" },
+                    "archivedAt": { "type": "string", "format": "date-time", "nullable": true },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string", "nullable": true },
+                        "email": { "type": "string" },
+                        "image": { "type": "string", "nullable": true }
+                      }
+                    }
+                  }
+                },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 400,
+        "statusText": "Bad Request",
+        "description": "No valid fields to update or invalid field values"
+      },
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 403,
+        "statusText": "Forbidden",
+        "description": "Insufficient permissions to update workspace"
+      },
+      {
+        "status": 404,
+        "statusText": "Not Found",
+        "description": "Workspace not found or access denied"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Failed to update workspace"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "PUT",
+    "url": "/api/v1/folders/{folderId}/move",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "parentId": "clx1234567890"
+    }
+  },
+  "response": {
+    "id": "clx0987654321",
+    "name": "Documents",
+    "parentId": "clx1234567890",
+    "updatedAt": "2024-01-20T15:45:00Z"
+  }
+}

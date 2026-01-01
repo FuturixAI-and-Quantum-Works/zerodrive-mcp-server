@@ -1,0 +1,40 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/workspaces/{workspaceId}/folders",
+    "headers": {
+      "Authorization": "Bearer zd_live_abc123...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Project Documents",
+      "parentId": null,
+      "description": "Documents for Q4 project",
+      "color": "#3B82F6"
+    }
+  },
+  "response": {
+    "success": true,
+    "data": {
+      "folder": {
+        "id": "folder_new123",
+        "name": "Project Documents",
+        "description": "Documents for Q4 project",
+        "color": "#3B82F6",
+        "isStarred": false,
+        "isShared": false,
+        "isTrashed": false,
+        "createdAt": "2024-01-20T10:30:00Z",
+        "updatedAt": "2024-01-20T10:30:00Z",
+        "createdBy": {
+          "id": "user_def456",
+          "name": "John Doe",
+          "email": "john@example.com",
+          "image": "https://avatars.example.com/john.jpg"
+        },
+        "parent": null
+      },
+      "message": "Folder created successfully"
+    }
+  }
+}

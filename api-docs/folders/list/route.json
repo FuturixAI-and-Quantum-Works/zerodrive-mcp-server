@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "title": "List Folders",
+    "description": "Retrieve a paginated list of folders with optional filtering, sorting, and search capabilities.",
+    "category": "Folder Management",
+    "categorySlug": "folders"
+  },
+  "endpoint": {
+    "method": "GET",
+    "path": "/api/v1/folders",
+    "baseUrl": "https://drive.futurixai.com"
+  },
+  "auth": {
+    "required": true,
+    "type": "bearer",
+    "scopes": ["folders:read"]
+  },
+  "rateLimit": {
+    "requests": 100,
+    "window": "1m"
+  },
+  "request": {
+    "headers": [
+      {
+        "name": "Authorization",
+        "type": "string",
+        "required": true,
+        "description": "Bearer token for authentication",
+        "example": "Bearer zd_live_abc123..."
+      }
+    ],
+    "queryParams": [
+      {
+        "name": "folderId",
+        "type": "string",
+        "required": false,
+        "description": "Parent folder ID to list subfolders. Omit or use empty string for root folders.",
+        "example": "clx1234567890"
+      },
+      {
+        "name": "starred",
+        "type": "boolean",
+        "required": false,
+        "description": "Filter to show only starred folders",
+        "default": false
+      },
+      {
+        "name": "shared",
+        "type": "boolean",
+        "required": false,
+        "description": "Filter to show only shared folders",
+        "default": false
+      },
+      {
+        "name": "trashed",
+        "type": "boolean",
+        "required": false,
+        "description": "Include trashed folders in results",
+        "default": false
+      },
+      {
+        "name": "search",
+        "type": "string",
+        "required": false,
+        "description": "Search query to filter folders by name",
+        "example": "projects"
+      },
+      {
+        "name": "limit",
+        "type": "integer",
+        "required": false,
+        "description": "Maximum number of folders to return",
+        "default": 50,
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "name": "offset",
+        "type": "integer",
+        "required": false,
+        "description": "Number of folders to skip for pagination",
+        "default": 0,
+        "minimum": 0
+      },
+      {
+        "name": "sortBy",
+        "type": "string",
+        "required": false,
+        "description": "Field to sort results by",
+        "enum": ["name", "createdAt", "updatedAt"],
+        "default": "name"
+      },
+      {
+        "name": "sortOrder",
+        "type": "string",
+        "required": false,
+        "description": "Sort order direction",
+        "enum": ["asc", "desc"],
+        "default": "asc"
+      }
+    ]
+  },
+  "responses": {
+    "success": [
+      {
+        "status": 200,
+        "statusText": "OK",
+        "description": "Successfully retrieved folder list",
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "data": {
+              "type": "object",
+              "properties": {
+                "folders": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "name": { "type": "string" },
+                      "description": { "type": "string", "nullable": true },
+                      "color": { "type": "string", "nullable": true },
+                      "parentId": { "type": "string", "nullable": true },
+                      "isStarred": { "type": "boolean" },
+                      "isTrashed": { "type": "boolean" },
+                      "createdAt": { "type": "string", "format": "date-time" },
+                      "updatedAt": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                },
+                "total": { "type": "integer" },
+                "limit": { "type": "integer" },
+                "offset": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "errors": [
+      {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "description": "Missing or invalid authentication token"
+      },
+      {
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "description": "Server error occurred while retrieving folders"
+      }
+    ]
+  }
+}
