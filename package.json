@@ -1,5 +1,5 @@
 {
-  "name": "zerodrive-mcp-server",
+  "name": "@futurixai-labs/zerodrive-mcp-server",
   "version": "1.0.0",
   "description": "MCP Server for ZeroDrive - File management through Claude Desktop",
   "type": "module",
