@@ -3,7 +3,11 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { QueryBuilder, buildQueryString, buildQueryStringWithPrefix } from '../../../src/utils/query-builder.js';
+import {
+  QueryBuilder,
+  buildQueryString,
+  buildQueryStringWithPrefix,
+} from '../../../src/utils/query-builder.js';
 
 describe('QueryBuilder', () => {
   describe('appendIfDefined', () => {

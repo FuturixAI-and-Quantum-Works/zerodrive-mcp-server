@@ -231,7 +231,10 @@ export const workspaceListFixtures: Record<string, WorkspaceListResponse> = {
 /**
  * Create a list of workspaces for testing
  */
-export function createWorkspaceList(count: number, overrides: Partial<Workspace> = {}): Workspace[] {
+export function createWorkspaceList(
+  count: number,
+  overrides: Partial<Workspace> = {}
+): Workspace[] {
   return Array.from({ length: count }, (_, i) => ({
     ...workspaceFixtures.basic,
     id: `workspace-list-${String(i + 1).padStart(3, '0')}`,

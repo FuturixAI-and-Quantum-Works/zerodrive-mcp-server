@@ -97,11 +97,7 @@ export function mockFetchSuccess<T>(data: T, status: number = 200): Mock {
 /**
  * Mock fetch for error response
  */
-export function mockFetchErrorResponse(
-  status: number,
-  message: string,
-  code?: string
-): Mock {
+export function mockFetchErrorResponse(status: number, message: string, code?: string): Mock {
   return mockFetchOnce({
     status,
     json: {
@@ -200,9 +196,7 @@ export function assertFetchCalledWith(options: {
   const matchingCall = calls.find((call) => {
     if (options.url) {
       const urlMatch =
-        options.url instanceof RegExp
-          ? options.url.test(call.url)
-          : call.url.includes(options.url);
+        options.url instanceof RegExp ? options.url.test(call.url) : call.url.includes(options.url);
       if (!urlMatch) return false;
     }
 
@@ -227,9 +221,7 @@ export function assertFetchCalledWith(options: {
   });
 
   if (!matchingCall) {
-    const callsSummary = calls
-      .map((c) => `${c.method} ${c.url}`)
-      .join('\n  ');
+    const callsSummary = calls.map((c) => `${c.method} ${c.url}`).join('\n  ');
     throw new Error(
       `Expected fetch call matching ${JSON.stringify(options)} not found.\nActual calls:\n  ${callsSummary || '(none)'}`
     );
@@ -242,7 +234,9 @@ export function assertFetchCalledWith(options: {
 export function assertFetchCalledTimes(times: number): void {
   const actualTimes = vi.mocked(global.fetch).mock.calls.length;
   if (actualTimes !== times) {
-    throw new Error(`Expected fetch to be called ${times} times, but was called ${actualTimes} times`);
+    throw new Error(
+      `Expected fetch to be called ${times} times, but was called ${actualTimes} times`
+    );
   }
 }
 

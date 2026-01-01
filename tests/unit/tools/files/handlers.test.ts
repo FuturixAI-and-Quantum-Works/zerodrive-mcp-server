@@ -12,14 +12,8 @@ import {
   assertFetchCalledWith,
   getFetchCallDetails,
 } from '../../../mocks/fetch.mock.js';
-import {
-  createMockFile,
-  createMockFiles,
-} from '../../../mocks/entities.mock.js';
-import {
-  mockApiResponses,
-  createPaginatedResponse,
-} from '../../../mocks/responses.mock.js';
+import { createMockFile, createMockFiles } from '../../../mocks/entities.mock.js';
+import { mockApiResponses, createPaginatedResponse } from '../../../mocks/responses.mock.js';
 import { fileFixtures, createFileList } from '../../../fixtures/data/files.fixture.js';
 
 /**
@@ -188,9 +182,7 @@ describe('File Tool Handlers', () => {
 
     it('should handle max limit (100)', async () => {
       const files = createMockFiles(100);
-      mockFetchSuccess(
-        createPaginatedResponse(files, { total: 250, limit: 100, hasMore: true })
-      );
+      mockFetchSuccess(createPaginatedResponse(files, { total: 250, limit: 100, hasMore: true }));
 
       const result = await fileHandlers.list_files({ limit: 100 });
       const parsed = JSON.parse(result);
@@ -200,9 +192,7 @@ describe('File Tool Handlers', () => {
     });
 
     it('should handle offset beyond total', async () => {
-      mockFetchSuccess(
-        createPaginatedResponse([], { total: 50, offset: 100, hasMore: false })
-      );
+      mockFetchSuccess(createPaginatedResponse([], { total: 50, offset: 100, hasMore: false }));
 
       const result = await fileHandlers.list_files({ offset: 100 });
       const parsed = JSON.parse(result);
@@ -242,17 +232,11 @@ describe('File Tool Handlers', () => {
     });
 
     it('should throw on missing fileId', async () => {
-      await expectToThrowZodError(
-        () => fileHandlers.get_file({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => fileHandlers.get_file({}), 'Required');
     });
 
     it('should throw on empty fileId', async () => {
-      await expectToThrowZodError(
-        () => fileHandlers.get_file({ fileId: '' }),
-        'ID is required'
-      );
+      await expectToThrowZodError(() => fileHandlers.get_file({ fileId: '' }), 'ID is required');
     });
 
     it('should handle 404 not found', async () => {
@@ -289,18 +273,13 @@ describe('File Tool Handlers', () => {
     });
 
     it('should throw on missing fileId', async () => {
-      await expectToThrowZodError(
-        () => fileHandlers.download_file({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => fileHandlers.download_file({}), 'Required');
     });
 
     it('should handle 404 not found', async () => {
       mockFetchErrorResponse(404, 'File not found');
 
-      await expect(
-        fileHandlers.download_file({ fileId: 'nonexistent' })
-      ).rejects.toThrow();
+      await expect(fileHandlers.download_file({ fileId: 'nonexistent' })).rejects.toThrow();
     });
   });
 
@@ -574,9 +553,7 @@ describe('File Tool Handlers', () => {
     });
 
     it('should throw on missing emails', async () => {
-      await expect(
-        fileHandlers.share_file({ fileId: 'file-123' })
-      ).rejects.toThrow(ZodError);
+      await expect(fileHandlers.share_file({ fileId: 'file-123' })).rejects.toThrow(ZodError);
     });
 
     it('should throw on empty emails array', async () => {
@@ -588,10 +565,11 @@ describe('File Tool Handlers', () => {
 
     it('should throw on invalid email format', async () => {
       await expectToThrowZodError(
-        () => fileHandlers.share_file({
-          fileId: 'file-123',
-          emails: ['invalid-email'],
-        }),
+        () =>
+          fileHandlers.share_file({
+            fileId: 'file-123',
+            emails: ['invalid-email'],
+          }),
         'Invalid email'
       );
     });
@@ -609,10 +587,7 @@ describe('File Tool Handlers', () => {
 
   describe('upload_file', () => {
     it('should throw on missing filePath', async () => {
-      await expectToThrowZodError(
-        () => fileHandlers.upload_file({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => fileHandlers.upload_file({}), 'Required');
     });
 
     it('should throw on empty filePath', async () => {

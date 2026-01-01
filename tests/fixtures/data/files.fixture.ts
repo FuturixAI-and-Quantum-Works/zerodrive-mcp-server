@@ -2,7 +2,12 @@
  * File entity fixtures for testing
  */
 
-import type { ZeroDriveFile, FileMetadata, UploadResult, SignedUrlResult } from '../../../src/types/entities.js';
+import type {
+  ZeroDriveFile,
+  FileMetadata,
+  UploadResult,
+  SignedUrlResult,
+} from '../../../src/types/entities.js';
 
 /**
  * Basic file fixtures
@@ -190,7 +195,10 @@ export const signedUrlFixtures: Record<string, SignedUrlResult> = {
 /**
  * Create a list of files for pagination testing
  */
-export function createFileList(count: number, overrides: Partial<ZeroDriveFile> = {}): ZeroDriveFile[] {
+export function createFileList(
+  count: number,
+  overrides: Partial<ZeroDriveFile> = {}
+): ZeroDriveFile[] {
   return Array.from({ length: count }, (_, i) => ({
     ...fileFixtures.basic,
     id: `file-list-${String(i + 1).padStart(3, '0')}`,

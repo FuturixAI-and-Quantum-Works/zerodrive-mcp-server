@@ -84,10 +84,7 @@ export function createMockFolder(overrides: Partial<Folder> = {}): Folder {
 /**
  * Create multiple mock folders
  */
-export function createMockFolders(
-  count: number,
-  overrides: Partial<Folder> = {}
-): Folder[] {
+export function createMockFolders(count: number, overrides: Partial<Folder> = {}): Folder[] {
   return Array.from({ length: count }, () => createMockFolder(overrides));
 }
 
@@ -126,9 +123,7 @@ export function createMockWorkspaces(
 /**
  * Create a mock workspace file entity
  */
-export function createMockWorkspaceFile(
-  overrides: Partial<WorkspaceFile> = {}
-): WorkspaceFile {
+export function createMockWorkspaceFile(overrides: Partial<WorkspaceFile> = {}): WorkspaceFile {
   const baseFile = createMockFile(overrides);
   return {
     ...baseFile,
@@ -246,10 +241,19 @@ export const fixtures = {
     basic: createMockFile({ id: 'file-basic', name: 'document.pdf', mimeType: 'application/pdf' }),
     starred: createMockFile({ id: 'file-starred', isStarred: true }),
     shared: createMockFile({ id: 'file-shared', isShared: true }),
-    trashed: createMockFile({ id: 'file-trashed', isTrashed: true, trashedAt: new Date().toISOString() }),
+    trashed: createMockFile({
+      id: 'file-trashed',
+      isTrashed: true,
+      trashedAt: new Date().toISOString(),
+    }),
     inFolder: createMockFile({ id: 'file-in-folder', folderId: 'folder-parent' }),
     large: createMockFile({ id: 'file-large', size: 100 * 1024 * 1024 }),
-    image: createMockFile({ id: 'file-image', name: 'photo.jpg', mimeType: 'image/jpeg', extension: 'jpg' }),
+    image: createMockFile({
+      id: 'file-image',
+      name: 'photo.jpg',
+      mimeType: 'image/jpeg',
+      extension: 'jpg',
+    }),
   },
   folders: {
     basic: createMockFolder({ id: 'folder-basic', name: 'Documents' }),
@@ -269,6 +273,11 @@ export const fixtures = {
   },
   trash: {
     file: createMockTrashItem({ id: 'trash-file', type: 'file' }),
-    folder: createMockTrashItem({ id: 'trash-folder', type: 'folder', size: undefined, mimeType: undefined }),
+    folder: createMockTrashItem({
+      id: 'trash-folder',
+      type: 'folder',
+      size: undefined,
+      mimeType: undefined,
+    }),
   },
 };

@@ -16,7 +16,12 @@ import {
   formatBytes,
   formatDate,
 } from '../../../src/utils/response-formatter.js';
-import { ValidationError, NetworkError, ErrorCode, ZeroDriveError } from '../../../src/errors/base.js';
+import {
+  ValidationError,
+  NetworkError,
+  ErrorCode,
+  ZeroDriveError,
+} from '../../../src/errors/base.js';
 
 describe('formatSuccess', () => {
   it('should format object as JSON', () => {

@@ -12,10 +12,7 @@ import {
   executeTool,
   getToolCategory,
 } from '../../../src/tools/registry.js';
-import {
-  mockFetchSuccess,
-  mockFetchErrorResponse,
-} from '../../mocks/fetch.mock.js';
+import { mockFetchSuccess, mockFetchErrorResponse } from '../../mocks/fetch.mock.js';
 import { createMockFile } from '../../mocks/entities.mock.js';
 import { createPaginatedResponse } from '../../mocks/responses.mock.js';
 

@@ -4,7 +4,10 @@
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ZodError } from 'zod';
-import { workspaceHandlers, executeWorkspaceTool } from '../../../../src/tools/workspaces/handlers.js';
+import {
+  workspaceHandlers,
+  executeWorkspaceTool,
+} from '../../../../src/tools/workspaces/handlers.js';
 import {
   mockFetchSuccess,
   mockFetchErrorResponse,
@@ -187,38 +190,39 @@ describe('Workspace Tool Handlers', () => {
 
     it('should throw on name exceeding 100 characters', async () => {
       await expectToThrowZodError(
-        () => workspaceHandlers.create_workspace({
-          name: 'x'.repeat(101),
-          storageAllocation: MIN_STORAGE,
-        }),
+        () =>
+          workspaceHandlers.create_workspace({
+            name: 'x'.repeat(101),
+            storageAllocation: MIN_STORAGE,
+          }),
         'cannot exceed 100'
       );
     });
 
     it('should throw on missing storageAllocation', async () => {
       // Union type gives "Invalid input" error for missing value
-      await expect(
-        workspaceHandlers.create_workspace({ name: 'Test' })
-      ).rejects.toThrow(ZodError);
+      await expect(workspaceHandlers.create_workspace({ name: 'Test' })).rejects.toThrow(ZodError);
     });
 
     it('should throw on storage below minimum', async () => {
       await expectToThrowZodError(
-        () => workspaceHandlers.create_workspace({
-          name: 'Test',
-          storageAllocation: 50 * 1024 * 1024, // 50MB
-        }),
+        () =>
+          workspaceHandlers.create_workspace({
+            name: 'Test',
+            storageAllocation: 50 * 1024 * 1024, // 50MB
+          }),
         'Minimum storage'
       );
     });
 
     it('should throw on invalid color format', async () => {
       await expectToThrowZodError(
-        () => workspaceHandlers.create_workspace({
-          name: 'Test',
-          storageAllocation: MIN_STORAGE,
-          color: 'invalid',
-        }),
+        () =>
+          workspaceHandlers.create_workspace({
+            name: 'Test',
+            storageAllocation: MIN_STORAGE,
+            color: 'invalid',
+          }),
         'Invalid hex color'
       );
     });
@@ -249,10 +253,7 @@ describe('Workspace Tool Handlers', () => {
     });
 
     it('should throw on missing workspaceId', async () => {
-      await expectToThrowZodError(
-        () => workspaceHandlers.get_workspace({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => workspaceHandlers.get_workspace({}), 'Required');
     });
 
     it('should throw on empty workspaceId', async () => {
@@ -288,10 +289,11 @@ describe('Workspace Tool Handlers', () => {
 
     it('should throw on empty filePath', async () => {
       await expectToThrowZodError(
-        () => workspaceHandlers.upload_workspace_file({
-          workspaceId: 'ws-123',
-          filePath: '',
-        }),
+        () =>
+          workspaceHandlers.upload_workspace_file({
+            workspaceId: 'ws-123',
+            filePath: '',
+          }),
         'File path is required'
       );
     });
@@ -391,10 +393,7 @@ describe('Workspace Tool Handlers', () => {
     });
 
     it('should throw on missing workspaceId', async () => {
-      await expectToThrowZodError(
-        () => workspaceHandlers.list_workspace_files({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => workspaceHandlers.list_workspace_files({}), 'Required');
     });
   });
 
@@ -490,10 +489,7 @@ describe('Workspace Tool Handlers', () => {
     });
 
     it('should throw on missing workspaceId', async () => {
-      await expectToThrowZodError(
-        () => workspaceHandlers.list_workspace_folders({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => workspaceHandlers.list_workspace_folders({}), 'Required');
     });
   });
 
@@ -581,21 +577,23 @@ describe('Workspace Tool Handlers', () => {
 
     it('should throw on name exceeding 255 characters', async () => {
       await expectToThrowZodError(
-        () => workspaceHandlers.create_workspace_folder({
-          workspaceId: 'ws-123',
-          name: 'x'.repeat(256),
-        }),
+        () =>
+          workspaceHandlers.create_workspace_folder({
+            workspaceId: 'ws-123',
+            name: 'x'.repeat(256),
+          }),
         'cannot exceed 255'
       );
     });
 
     it('should throw on invalid color format', async () => {
       await expectToThrowZodError(
-        () => workspaceHandlers.create_workspace_folder({
-          workspaceId: 'ws-123',
-          name: 'Test',
-          color: 'red',
-        }),
+        () =>
+          workspaceHandlers.create_workspace_folder({
+            workspaceId: 'ws-123',
+            name: 'Test',
+            color: 'red',
+          }),
         'Invalid hex color'
       );
     });
@@ -745,11 +743,12 @@ describe('Workspace Tool Handlers', () => {
 
     it('should throw on invalid color format', async () => {
       await expectToThrowZodError(
-        () => workspaceHandlers.update_workspace_folder({
-          workspaceId: 'ws-123',
-          folderId: 'folder-123',
-          color: 'blue',
-        }),
+        () =>
+          workspaceHandlers.update_workspace_folder({
+            workspaceId: 'ws-123',
+            folderId: 'folder-123',
+            color: 'blue',
+          }),
         'Invalid hex color'
       );
     });

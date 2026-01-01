@@ -103,7 +103,9 @@ describe.skipIf(!runTests)('Files Integration', () => {
       // Verify sorting (if multiple files)
       if (data.files.length > 1) {
         for (let i = 1; i < data.files.length; i++) {
-          expect(data.files[i].name.localeCompare(data.files[i - 1].name)).toBeGreaterThanOrEqual(0);
+          expect(data.files[i].name.localeCompare(data.files[i - 1].name)).toBeGreaterThanOrEqual(
+            0
+          );
         }
       }
     });

@@ -14,11 +14,7 @@ const tempFiles: string[] = [];
 /**
  * Create a temporary file with specified size
  */
-export function createTempFile(
-  size: number,
-  name: string,
-  content?: string | Buffer
-): string {
+export function createTempFile(size: number, name: string, content?: string | Buffer): string {
   const tmpDir = mkdtempSync(join(tmpdir(), 'zerodrive-test-'));
   const filePath = join(tmpDir, name);
 

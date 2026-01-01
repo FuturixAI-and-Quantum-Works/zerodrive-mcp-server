@@ -149,9 +149,9 @@ describe('RequestBodyBuilder', () => {
     it('should throw if any field is undefined', () => {
       const builder = new RequestBodyBuilder();
 
-      expect(() =>
-        builder.setRequiredMany({ name: 'test', type: undefined })
-      ).toThrow(MissingRequiredFieldError);
+      expect(() => builder.setRequiredMany({ name: 'test', type: undefined })).toThrow(
+        MissingRequiredFieldError
+      );
     });
   });
 

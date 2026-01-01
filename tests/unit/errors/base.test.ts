@@ -25,7 +25,13 @@ import {
 describe('Error Classes', () => {
   describe('ZeroDriveError', () => {
     it('should create error with all properties', () => {
-      const error = new ZeroDriveError('Test error', ErrorCode.INTERNAL_ERROR, 500, { field: 'test' }, true);
+      const error = new ZeroDriveError(
+        'Test error',
+        ErrorCode.INTERNAL_ERROR,
+        500,
+        { field: 'test' },
+        true
+      );
 
       expect(error).toBeInstanceOf(Error);
       expect(error).toBeInstanceOf(ZeroDriveError);
@@ -53,7 +59,13 @@ describe('Error Classes', () => {
     });
 
     it('should serialize to JSON', () => {
-      const error = new ZeroDriveError('Test error', ErrorCode.INTERNAL_ERROR, 500, { field: 'test' }, true);
+      const error = new ZeroDriveError(
+        'Test error',
+        ErrorCode.INTERNAL_ERROR,
+        500,
+        { field: 'test' },
+        true
+      );
       const json = error.toJSON();
 
       expect(json).toEqual({

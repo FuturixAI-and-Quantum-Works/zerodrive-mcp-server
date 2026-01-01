@@ -138,9 +138,7 @@ describe('Trash Tool Handlers', () => {
 
     it('should handle max limit (100)', async () => {
       const items = createMockTrashItems(100);
-      mockFetchSuccess(
-        createPaginatedResponse(items, { total: 250, limit: 100, hasMore: true })
-      );
+      mockFetchSuccess(createPaginatedResponse(items, { total: 250, limit: 100, hasMore: true }));
 
       const result = await trashHandlers.list_trash({ limit: 100 });
       const parsed = JSON.parse(result);
@@ -194,9 +192,7 @@ describe('Trash Tool Handlers', () => {
     });
 
     it('should reject invalid sortBy', async () => {
-      await expect(
-        trashHandlers.list_trash({ sortBy: 'invalid' as 'name' })
-      ).rejects.toThrow();
+      await expect(trashHandlers.list_trash({ sortBy: 'invalid' as 'name' })).rejects.toThrow();
     });
   });
 
@@ -264,10 +260,7 @@ describe('Trash Tool Handlers', () => {
     });
 
     it('should throw on missing itemId', async () => {
-      await expectToThrowZodError(
-        () => trashHandlers.restore_from_trash({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => trashHandlers.restore_from_trash({}), 'Required');
     });
 
     it('should throw on empty itemId', async () => {
@@ -289,17 +282,13 @@ describe('Trash Tool Handlers', () => {
     it('should handle 404 not found', async () => {
       mockFetchErrorResponse(404, 'Item not found in trash');
 
-      await expect(
-        trashHandlers.restore_from_trash({ itemId: 'nonexistent' })
-      ).rejects.toThrow();
+      await expect(trashHandlers.restore_from_trash({ itemId: 'nonexistent' })).rejects.toThrow();
     });
 
     it('should handle 409 conflict (original location deleted)', async () => {
       mockFetchErrorResponse(409, 'Original parent folder no longer exists');
 
-      await expect(
-        trashHandlers.restore_from_trash({ itemId: 'trash-001' })
-      ).rejects.toThrow();
+      await expect(trashHandlers.restore_from_trash({ itemId: 'trash-001' })).rejects.toThrow();
     });
   });
 
@@ -348,9 +337,7 @@ describe('Trash Tool Handlers', () => {
     it('should ignore unknown arguments', async () => {
       mockFetchSuccess(emptyTrashResultFixtures.success);
 
-      await expect(
-        trashHandlers.empty_trash({ unknownArg: 'value' })
-      ).resolves.not.toThrow();
+      await expect(trashHandlers.empty_trash({ unknownArg: 'value' })).resolves.not.toThrow();
     });
   });
 

@@ -11,14 +11,8 @@ import {
   assertFetchCalledWith,
   getFetchCallDetails,
 } from '../../../mocks/fetch.mock.js';
-import {
-  createMockFolder,
-  createMockFolders,
-} from '../../../mocks/entities.mock.js';
-import {
-  mockApiResponses,
-  createPaginatedResponse,
-} from '../../../mocks/responses.mock.js';
+import { createMockFolder, createMockFolders } from '../../../mocks/entities.mock.js';
+import { mockApiResponses, createPaginatedResponse } from '../../../mocks/responses.mock.js';
 import { folderFixtures, folderWithPathFixtures } from '../../../fixtures/data/folders.fixture.js';
 
 /**
@@ -176,9 +170,7 @@ describe('Folder Tool Handlers', () => {
 
     it('should handle max limit (100)', async () => {
       const folders = createMockFolders(100);
-      mockFetchSuccess(
-        createPaginatedResponse(folders, { total: 250, limit: 100, hasMore: true })
-      );
+      mockFetchSuccess(createPaginatedResponse(folders, { total: 250, limit: 100, hasMore: true }));
 
       const result = await folderHandlers.list_folders({ limit: 100 });
       const parsed = JSON.parse(result);
@@ -254,10 +246,7 @@ describe('Folder Tool Handlers', () => {
     });
 
     it('should throw on missing name', async () => {
-      await expectToThrowZodError(
-        () => folderHandlers.create_folder({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => folderHandlers.create_folder({}), 'Required');
     });
 
     it('should throw on empty name', async () => {
@@ -270,9 +259,7 @@ describe('Folder Tool Handlers', () => {
     it('should handle 409 conflict for duplicate name', async () => {
       mockFetchErrorResponse(409, 'Folder with this name already exists');
 
-      await expect(
-        folderHandlers.create_folder({ name: 'Existing' })
-      ).rejects.toThrow();
+      await expect(folderHandlers.create_folder({ name: 'Existing' })).rejects.toThrow();
     });
   });
 
@@ -293,10 +280,7 @@ describe('Folder Tool Handlers', () => {
     });
 
     it('should throw on missing folderId', async () => {
-      await expectToThrowZodError(
-        () => folderHandlers.get_folder({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => folderHandlers.get_folder({}), 'Required');
     });
 
     it('should throw on empty folderId', async () => {
@@ -309,9 +293,7 @@ describe('Folder Tool Handlers', () => {
     it('should handle 404 not found', async () => {
       mockFetchErrorResponse(404, 'Folder not found');
 
-      await expect(
-        folderHandlers.get_folder({ folderId: 'nonexistent' })
-      ).rejects.toThrow();
+      await expect(folderHandlers.get_folder({ folderId: 'nonexistent' })).rejects.toThrow();
     });
 
     it('should return folder with all properties', async () => {
@@ -415,18 +397,16 @@ describe('Folder Tool Handlers', () => {
     });
 
     it('should throw on missing folderId', async () => {
-      await expectToThrowZodError(
-        () => folderHandlers.update_folder({ name: 'test' }),
-        'Required'
-      );
+      await expectToThrowZodError(() => folderHandlers.update_folder({ name: 'test' }), 'Required');
     });
 
     it('should throw on invalid color format', async () => {
       await expectToThrowZodError(
-        () => folderHandlers.update_folder({
-          folderId: 'folder-123',
-          color: 'invalid',
-        }),
+        () =>
+          folderHandlers.update_folder({
+            folderId: 'folder-123',
+            color: 'invalid',
+          }),
         'Invalid hex color'
       );
     });
@@ -485,18 +465,13 @@ describe('Folder Tool Handlers', () => {
     });
 
     it('should throw on missing folderId', async () => {
-      await expectToThrowZodError(
-        () => folderHandlers.delete_folder({}),
-        'Required'
-      );
+      await expectToThrowZodError(() => folderHandlers.delete_folder({}), 'Required');
     });
 
     it('should handle 404 not found', async () => {
       mockFetchErrorResponse(404, 'Folder not found');
 
-      await expect(
-        folderHandlers.delete_folder({ folderId: 'nonexistent' })
-      ).rejects.toThrow();
+      await expect(folderHandlers.delete_folder({ folderId: 'nonexistent' })).rejects.toThrow();
     });
 
     it('should handle folder with contents', async () => {
@@ -662,9 +637,9 @@ describe('Folder Tool Handlers', () => {
     });
 
     it('should throw on missing emails', async () => {
-      await expect(
-        folderHandlers.share_folder({ folderId: 'folder-123' })
-      ).rejects.toThrow(ZodError);
+      await expect(folderHandlers.share_folder({ folderId: 'folder-123' })).rejects.toThrow(
+        ZodError
+      );
     });
 
     it('should throw on empty emails array', async () => {
@@ -676,10 +651,11 @@ describe('Folder Tool Handlers', () => {
 
     it('should throw on invalid email format', async () => {
       await expectToThrowZodError(
-        () => folderHandlers.share_folder({
-          folderId: 'folder-123',
-          emails: ['invalid-email'],
-        }),
+        () =>
+          folderHandlers.share_folder({
+            folderId: 'folder-123',
+            emails: ['invalid-email'],
+          }),
         'Invalid email'
       );
     });

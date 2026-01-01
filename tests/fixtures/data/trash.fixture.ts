@@ -117,7 +117,12 @@ export const trashListFixtures = {
     },
   },
   filesOnly: {
-    data: [trashFixtures.file, trashFixtures.recentFile, trashFixtures.oldFile, trashFixtures.imageFile],
+    data: [
+      trashFixtures.file,
+      trashFixtures.recentFile,
+      trashFixtures.oldFile,
+      trashFixtures.imageFile,
+    ],
     pagination: {
       total: 4,
       limit: 50,

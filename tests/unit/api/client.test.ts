@@ -326,9 +326,9 @@ describe('API Client', () => {
     it('should not retry on non-retryable error', async () => {
       mockFetchErrorResponse(400, 'Bad request');
 
-      await expect(
-        apiRequestWithRetry('/api/v1/test', {}, { maxRetries: 3 })
-      ).rejects.toThrow(ValidationError);
+      await expect(apiRequestWithRetry('/api/v1/test', {}, { maxRetries: 3 })).rejects.toThrow(
+        ValidationError
+      );
 
       expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1);
     });
@@ -378,7 +378,11 @@ describe('API Client', () => {
           })
       );
 
-      const result = await apiRequestWithRetry('/api/v1/test', {}, { maxRetries: 3, retryDelay: 10 });
+      const result = await apiRequestWithRetry(
+        '/api/v1/test',
+        {},
+        { maxRetries: 3, retryDelay: 10 }
+      );
 
       expect(result).toEqual({ data: 'success' });
     });

@@ -174,8 +174,7 @@ export async function runConcurrent<T>(
       await Promise.race(executing);
       // Remove completed promises
       const completed = executing.filter(
-        (p) =>
-          p.then(() => true).catch(() => true) as unknown as boolean
+        (p) => p.then(() => true).catch(() => true) as unknown as boolean
       );
       for (const c of completed) {
         const index = executing.indexOf(c);

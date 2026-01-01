@@ -68,10 +68,8 @@ export const mockApiResponses = {
   fileContent: (content: string) => content,
 
   // Folder responses
-  folderList: (
-    folders: Folder[],
-    pagination?: Partial<PaginatedResponse<Folder>['pagination']>
-  ) => createPaginatedResponse(folders, pagination),
+  folderList: (folders: Folder[], pagination?: Partial<PaginatedResponse<Folder>['pagination']>) =>
+    createPaginatedResponse(folders, pagination),
 
   folder: (overrides: Partial<Folder> = {}) => createMockFolder(overrides),
 
@@ -131,9 +129,7 @@ export const mockApiResponses = {
 
   // Error responses
   notFound: (resourceType: string = 'Resource', resourceId?: string) => ({
-    message: resourceId
-      ? `${resourceType} not found: ${resourceId}`
-      : `${resourceType} not found`,
+    message: resourceId ? `${resourceType} not found: ${resourceId}` : `${resourceType} not found`,
     code: 'NOT_FOUND',
     statusCode: 404,
   }),
