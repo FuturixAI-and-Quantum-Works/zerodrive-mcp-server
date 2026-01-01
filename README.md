@@ -23,6 +23,14 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server for Ze
 
 ## Installation
 
+### Via npm (Recommended)
+
+```bash
+npx @futurixai-labs/zerodrive-mcp-server
+```
+
+### From Source
+
 ```bash
 # Clone the repository
 git clone https://github.com/futurixai/zerodrive-mcp-server.git
@@ -59,8 +67,8 @@ Add to your Claude Desktop configuration (`claude_desktop_config.json`):
 {
   "mcpServers": {
     "zerodrive": {
-      "command": "node",
-      "args": ["/path/to/zerodrive-mcp-server/dist/index.js"],
+      "command": "npx",
+      "args": ["@futurixai-labs/zerodrive-mcp-server"],
       "env": {
         "ZERODRIVE_API_KEY": "your-api-key-here"
       }
