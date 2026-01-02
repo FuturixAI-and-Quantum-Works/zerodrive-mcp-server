@@ -45,12 +45,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/futurixai/zerodrive-mcp-server.git"
+    "url": "https://github.com/FuturixAI-and-Quantum-Works/zerodrive-mcp-server.git"
   },
   "bugs": {
-    "url": "https://github.com/futurixai/zerodrive-mcp-server/issues"
+    "url": "https://github.com/FuturixAI-and-Quantum-Works/zerodrive-mcp-server/issues"
   },
-  "homepage": "https://github.com/futurixai/zerodrive-mcp-server#readme",
+  "homepage": "https://github.com/FuturixAI-and-Quantum-Works/zerodrive-mcp-server#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "form-data": "^4.0.0",

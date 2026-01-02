@@ -1,6 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "futurixai/zerodrive-mcp-server" }],
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "FuturixAI-and-Quantum-Works/zerodrive-mcp-server" }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],
